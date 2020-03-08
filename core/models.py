@@ -9,7 +9,7 @@ class Details(models.Model):
     name = models.CharField(max_length=100,default='')
     regis = models.CharField(max_length=100,default='')
     email = models.CharField(max_length=100)
-    phone = models.BigIntegerField()
+    phone = models.BigIntegerField(default=0)
     block = models.CharField(max_length=50)
     agreement = models.BooleanField(choices=BOOL_CHOICES,help_text="You need to agree to get OD")
 

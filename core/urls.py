@@ -9,6 +9,7 @@ urlpatterns = [
     path('review/',views.review,name="review"),
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/',views.DetailsView.as_view(),name="api"),
     
     path('<str:a>/',views.notfo,name="notfound")
 ]

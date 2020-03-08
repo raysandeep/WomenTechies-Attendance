@@ -7,9 +7,13 @@ from .froms import(
     DetailsForm
 )
 from django.contrib.auth.decorators import login_required
-
+from .serializers import(
+    DetailsSerializer
+)
 # Create your views here.
-
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 @login_required(login_url='/')
 def dash(request):
@@ -93,3 +97,14 @@ def notfo(request,a):
 
 
 
+class DetailsView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        serializer = DetailsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            Response.status_code = 201
+            return Response({"status": "Successfully Created", "data": serializer.data})
+        else:
+            Response.status_code = 400
+            return Response(serializer.errors)
