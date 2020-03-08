@@ -5,5 +5,6 @@ from . import views
 urlpatterns = [
     path('',views.home,name="index"),
     path('dash/',views.dash,name="dash"),
-    path('review/',views.review,name="review")
+    path('review/',views.review,name="review"),
+    path('<str:a>/',views.notfo,name="notfound")
 ]

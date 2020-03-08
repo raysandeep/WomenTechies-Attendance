@@ -88,3 +88,5 @@ def home(request):
             return redirect('/')
     return render(request,'index.html')
 
+def notfo(request,a):
+    return render(request,'404.html')
