@@ -14,8 +14,15 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/')
 def dash(request):
     details1=0
+    details1 =  Details.objects.filter(user=request.user)[0].agreement
+    print('Dett   ',details1)
+
+
+
+
     details = Details.objects.get(user=request.user)
     detailsForm = DetailsForm(instance=details)  
+
     if request.method == 'POST':
         form = DetailsForm(request.POST, instance=details)
         if form.is_valid():
@@ -24,18 +31,8 @@ def dash(request):
             form1.save()
             print(form.instance)
             return redirect('/review/')
-    try:
-        details1 =  Details.objects.filter(user=request.user)[0].agreement
-        print('Dett   ',details1)
-    except:
-        return render(request,"dash.html",{'form':detailsForm})  
-
     
-    if details1!=1:
-        messages.info(request,'Already Verified')
-        return redirect('/review/')
-    else:
-        return render(request,"dash.html",{'form':detailsForm})  
+    return render(request,"dash.html",{'form':detailsForm})
 
 @login_required(login_url='/')
 def review(request):
@@ -76,17 +73,18 @@ def home(request):
             auth.login(request, user)
             try:
                 details = Details.objects.filter(user=request.user)[0].agreement
-                if details:
+                print(details)
+                if details == 1:
                     print("LOGIN SUCCESS")
-                    redirect('review/')
+                    return redirect('review/')
                 else:
-                    redirect('dash/')
+                    print('Dash')
+                    return redirect('dash/')
             except:
-                redirect('dash/')
+                pass
                 
         else:
-            messages.success(request, "Wrong Credentials",extra_tags='alert')
+            messages.success(request, "Wrong Credentials")
             return redirect('/')
-    if request.user is None:
-        return render(request,'index.html')
-    return redirect('dash/')
+    return render(request,'index.html')
+
