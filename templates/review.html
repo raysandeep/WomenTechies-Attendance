@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSC | OD Form</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <meta name="theme-color" content="#18e0cc" />
+    <style>
+        body {
+            position: relative;
+            height: intrinsic;
+            height: -moz-max-content;
+            height: fit-content;
+            min-height: 100vh;
+            width: fit-content;
+            min-width: 100vw;
+        }
+        .container{
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            left: 50%;
+        }
+        .input {
+            position: relative;
+            margin: 0;
+            padding: 0 10%;
+            padding-top: 10vh;
+            width: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+        }
+
+        .input>button {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+        }
+        .info1 {
+            position: relative;
+            display: grid;
+            /* grid-template-columns: repeat(2, 50%); */
+            text-align: center;
+            /* column-gap: 3vw; */
+        }
+        .display-none {
+            display: none;
+        }
+        .logo {
+            position: relative;
+            width: intrinsic;
+            width: -moz-max-content;
+            width: fit-content;
+            padding-top: 30px;
+            padding-left: 20px;
+        }
+        .heading{
+            margin-top: 50px;
+        }
+        .logo>img {
+            height: 2.5vh;
+        }
+
+        @media (max-width: 900px) {
+            .info1 {
+                grid-template-columns: none;
+                grid-template-rows: repeat(2, auto);
+                justify-items: center;
+
+            }
+
+            .logo {
+                margin-bottom: 40px;
+            }
+
+            .input {
+                padding-top: 5vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo">
+        <img src="{% static 'dsc-logo.svg' %}" alt="" class="_logo">
+    </div>
+    <div class="container">
+        <h4 style="color: #26a69a; text-align: center;" class="heading">DSC OD Form</h4>
+    </div>
+        <br>
+        <div>
+            <h4 class="" style="color: #26a69a;"><strong>Details</strong></h4>
+            <div class="info">
+                <div class="info1" style="text-align:center;">
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Name: </strong>{{name}}</h5>
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Registration Number: </strong>{{regis}}</h5>
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Email: </strong>{{email}}</h5>
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Phone: </strong>{{phone}}</h5>
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Block: </strong>{{block}}</h5>
+                    <h5 class="name"><strong style="color: #26a69a;text-align: left;">Agreement: </strong>{{agree}}</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
