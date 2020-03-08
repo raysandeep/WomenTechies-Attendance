@@ -90,3 +90,6 @@ def home(request):
 
 def notfo(request,a):
     return render(request,'404.html')
+
+
+
