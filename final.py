@@ -10,9 +10,9 @@ rows = []
 fields1 = [] 
 rows1 = [] 
 
-
+BASE_URL = 'https://women-techies.herokuapp.com'
 def func(email,password,name,regis,phone,block):
-    url = "http://127.0.0.1:8000/auth/users/"
+    url = BASE_URL+"/auth/users/"
 
     payload = 'username='+email+'m&password='+password
     headers = {
@@ -24,7 +24,7 @@ def func(email,password,name,regis,phone,block):
     print(response.text.encode('utf8'))
 
 
-    url = "http://127.0.0.1:8000/auth/token/login"
+    url = BASE_URL+"/auth/token/login"
 
     payload = 'username='+email+'m&password='+password
     headers = {
@@ -38,7 +38,7 @@ def func(email,password,name,regis,phone,block):
 
     token = json_data['auth_token']
     print(token)
-    url = "http://127.0.0.1:8000/api/"
+    url = BASE_URL+"/api/"
 
     payload = 'name='+name+'&regis='+regis+'&email='+email+'&block='+block+'&agreement=False'
     headers = {
