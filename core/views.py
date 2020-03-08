@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/')
 def dash(request):
+    details1=0
     details = Details.objects.get(user=request.user)
     detailsForm = DetailsForm(instance=details)  
     if request.method == 'POST':
@@ -23,26 +24,46 @@ def dash(request):
             form1.save()
             print(form.instance)
             return redirect('/review/')
+    try:
+        details1 =  Details.objects.filter(user=request.user)[0].agreement
+        print('Dett   ',details1)
+    except:
+        return render(request,"dash.html",{'form':detailsForm})  
 
-    return render(request,"dash.html",{'form':detailsForm})  
+    
+    if details1!=1:
+        messages.info(request,'Already Verified')
+        return redirect('/review/')
+    else:
+        return render(request,"dash.html",{'form':detailsForm})  
 
 @login_required(login_url='/')
 def review(request):
     details =  Details.objects.filter(user=request.user)[0]
+    
     if request.method == "POST":
         auth.logout(request)
         return redirect ('/')
+    
+    if details.agreement == 0:
+        
+        text = 'Something wrong :( contact team ASAP!'
+    else:
+        text = 'Verified Succesfully ;)'
+    
+        
     context= {
         'name':details.name,
         'regis':details.regis,
         'email':request.user.username,
         'phone':details.phone,
         'block':details.block,
-        'agree':details.agreement
+        'agree':text
     }
     return render(request,'review.html',context)
 
 def home(request):
+    
     if request.method == "POST":
         
         username = request.POST['email']
@@ -64,8 +85,8 @@ def home(request):
                 redirect('dash/')
                 
         else:
-            messages.error(request, "Wrong Credentials")
+            messages.success(request, "Wrong Credentials",extra_tags='alert')
             return redirect('/')
-        return redirect('/dash')
-
-    return render(request,'index.html')
+    if request.user is None:
+        return render(request,'index.html')
+    return redirect('dash/')
