@@ -88,8 +88,7 @@ def home(request):
                 pass
                 
         else:
-            messages.success(request, "Wrong Credentials",extra_tags="alert")
-            return redirect('/')
+            return render(request,'index.html',{'message':'Wrong Credentials'})
     return render(request,'index.html')
 
 def notfo(request,a):

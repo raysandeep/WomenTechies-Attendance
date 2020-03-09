@@ -11,7 +11,7 @@ fields1 = []
 rows1 = [] 
 
 BASE_URL = 'https://women-techies.herokuapp.com'
-def func(email,password,name,regis,phone,block):
+def func(email,password,name,block,regis,phone):
     url = BASE_URL+"/auth/users/"
 
     payload = 'username='+email+'m&password='+password
@@ -59,7 +59,6 @@ with open(filename, 'r') as csvfile:
     for row in csvreader: 
         rows.append(row) 
 
-
 with open(filename1, 'r') as csvfile: 
     csvreader = csv.reader(csvfile)  
     fields = next(csvreader) 
@@ -70,7 +69,7 @@ with open(filename1, 'r') as csvfile:
 def get_pass_phone(id):
     for row1 in rows1:
         if row1[1]==id:
-            return rows1[4],rows1[2]
+            return row1[4],row1[2]
 
 
 
@@ -78,7 +77,8 @@ def get_pass_phone(id):
 
 num = len(rows)
 i=0
-for row in rows[1:num]: 
+for row in rows[0:num]: 
     passw,phone=get_pass_phone(row[2])
-    func(row[2],passw[4],row[1],row[8],passw[2],row[7])
+    print(row[2],passw,row[1],row[8],row[9],phone)
+    func(row[2],passw,row[1],row[8],row[9],phone)
 print('done')
