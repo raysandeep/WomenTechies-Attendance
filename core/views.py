@@ -71,6 +71,7 @@ def home(request):
         password =  request.POST['password']
 
         print(password)
+        print(username)
         user = auth.authenticate(username=username,password=password)
         print(user)
         if user is not None:
@@ -107,3 +108,5 @@ class DetailsView(APIView):
         else:
             Response.status_code = 400
             return Response(serializer.errors)
+
+
