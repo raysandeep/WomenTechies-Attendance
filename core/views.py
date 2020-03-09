@@ -88,7 +88,7 @@ def home(request):
                 pass
                 
         else:
-            messages.success(request, "Wrong Credentials")
+            messages.success(request, "Wrong Credentials",extra_tags="alert")
             return redirect('/')
     return render(request,'index.html')
 

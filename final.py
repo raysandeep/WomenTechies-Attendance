@@ -48,7 +48,7 @@ def func(email,password,name,regis,phone,block):
 
     response = requests.request("POST", url, headers=headers, data = payload)
 
-    print(response.text.encode('utf8'))
+    print(response.status_code)
 
 
 
@@ -67,18 +67,18 @@ with open(filename1, 'r') as csvfile:
         rows1.append(row)   
 
 
-def get_pass(id):
-    return rows1[id][4]
-def get_email(id):
-    return rows1[id][1]
+def get_pass_phone(id):
+    for row1 in rows1:
+        if row1[1]==id:
+            return rows1[4],rows1[2]
 
 
-print(rows1[2][4])
+
+
+
 num = len(rows)
-print('\n\nRows are') 
 i=0
 for row in rows[1:num]: 
-
-    func(get_email(i),get_pass(i),row[1],str(0),row[9],row[8])
-    i+=1
+    passw,phone=get_pass_phone(row[2])
+    func(row[2],passw[4],row[1],row[8],passw[2],row[7])
 print('done')
